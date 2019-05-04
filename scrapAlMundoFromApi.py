@@ -27,7 +27,7 @@ class Datos (object):
         self.precio = precio
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-m","--Mes",  type=int, help="Número del mes, por defecto toma mes actual + 1",default=0)
+parser.add_argument("-m","--Mes",  type=str, help="Número del mes, por defecto toma mes actual + 1",default=0)
 parser.add_argument("-if","--IataFrom",  type=str, help="Iata Desde, default BUE",default="BUE")
 parser.add_argument("-it","--IataTo",  type=str, help="Iata hasta, default MIA",default="MIA")
 parser.add_argument("-n","--Numero",  type=int, help="Numero de página, default 1",default=1)
@@ -35,7 +35,7 @@ args = parser.parse_args()
 def executeScrap( ):
     lista = list()
     numeroMes = str(datetime.datetime.now().month+1)
-    if args.Mes<13 and args.Mes>0:
+    if int(args.Mes)<13 and int(args.Mes)>0:
         numeroMes=args.Mes
 
     iataFrom = args.IataFrom
