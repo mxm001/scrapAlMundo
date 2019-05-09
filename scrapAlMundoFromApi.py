@@ -29,25 +29,31 @@ class Datos (object):
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-m","--Mes",  type=str, help="Número del mes, por defecto toma mes actual + 1",default=0)
-parser.add_argument("-if","--IataFrom",  type=str, help="Iata Desde, default BUE",default="BUE")
-parser.add_argument("-it","--IataTo",  type=str, help="Iata hasta, default MIA",default="MIA")
+parser.add_argument("-if","--IataFrom",  type=str, help="Iata Desde, default BUE",default="")
+parser.add_argument("-it","--IataTo",  type=str, help="Iata hasta, default MIA",default="")
 parser.add_argument("-n","--Numero",  type=int, help="Numero de página, default 1",default=0)
 args = parser.parse_args()
-def executeScrap( ):
+def executeScrap(Mes=str(datetime.datetime.now().month+1),IataFrom="BUE",IataTo="MIA",Numero=0 ):
     lista = list()
-    paramMes = str(datetime.datetime.now().month+1)
+    paramMes = Mes
     if int(args.Mes)<13 and int(args.Mes)>0:
         paramMes=args.Mes
-
-    iataFrom = args.IataFrom
-    iataTo = args.IataTo
+    iataFrom=IataFrom
+    iataTo=IataTo
+    iataFrom =IataFrom
+    if(args.IataFrom!=""):
+        iataFrom = args.IataFrom
+    if(args.IataFrom!=""):
+        iataTo = args.IataTo
     
     pageSize = 100
     fechaInicio=datetime.date(datetime.datetime.today().year,int(paramMes),1)
     fechaFin=fechaInicio + relativedelta(months=+12)
     fechaActual=fechaInicio
     while fechaActual<=fechaFin:
-        pageNum = args.Numero
+        pageNum = Numero
+        if(args.Numero!=0):
+            pageNum = args.Numero
         numeroMes=str(fechaActual.month)
         url = "https://almundo.com.ar/flights/offers/api/offers?months="+numeroMes + \
             "&from="+iataFrom+"&to="+iataTo+"&page=" + \
